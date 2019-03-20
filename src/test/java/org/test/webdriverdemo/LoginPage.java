@@ -1,10 +1,10 @@
 package org.test.webdriverdemo;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -12,8 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("登录页面测试")
-public class LoginPage {
-    WebDriver driver;
+public class LoginPage extends BasePage {
     WebElement userName;
     WebElement password;
     WebElement loginBtn;
@@ -27,16 +26,10 @@ public class LoginPage {
 
     @BeforeEach
     void setup() {
-        driver = new ChromeDriver();
         driver.get("http://192.168.50.129");
         userName = driver.findElement(Locator.userName);
         password = driver.findElement(Locator.password);
         loginBtn = driver.findElement(Locator.loginBtn);
-    }
-
-    @AfterEach
-    void clean() {
-        driver.quit();
     }
 
     @Test
