@@ -32,12 +32,16 @@ public class LoginPage extends BasePage {
 
     @Before
     public void createWebDriver() {
-        driver = new ChromeDriver();
+        if (driver == null) {
+            driver = new ChromeDriver();
+        }
     }
 
     @After
     public void destroyWebDriver() {
-        driver.quit();
+        if (driver != null) {
+            driver.quit();
+        }
     }
 
     @Given("打开登录页面")
