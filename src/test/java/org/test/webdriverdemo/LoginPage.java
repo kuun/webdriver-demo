@@ -63,7 +63,8 @@ public class LoginPage extends BasePage {
 
     @Then("进入主页面")
     public void intoMainPage() {
-        assertTrue(driver.getCurrentUrl().contains("/main/manager_index.jsp"));
+        waitRefreshed();
+        assertTrue(waitUrlContains("manager_index.jsp"));
     }
 
     @BeforeEach
