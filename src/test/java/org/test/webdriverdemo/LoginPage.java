@@ -41,6 +41,7 @@ public class LoginPage extends BasePage {
     public void destroyWebDriver() {
         if (driver != null) {
             driver.quit();
+            driver = null;
         }
     }
 

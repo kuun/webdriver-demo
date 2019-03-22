@@ -25,6 +25,7 @@ public class SyslogConfigPage extends BasePage {
         static By port = By.name("port");
         static By save = By.tagName("button");
         static By notifyMsg = By.cssSelector("span[data-notify=message]");
+        static By ipErrorTip = By.id("ip-error");
     }
 
     @Given("打开Syslog配置页面")
@@ -52,17 +53,29 @@ public class SyslogConfigPage extends BasePage {
 
     @Then("Syslog启用成功")
     public void enableSyslogSuccessfully() {
-        WebElement notifyMsg = waitFor(Locator.notifyMsg);
+        WebElement notifyMsg = waitVisibleFor(Locator.notifyMsg);
         assertEquals("保存成功!", notifyMsg.getText());
     }
 
-    @Test
-    void testIPInvalid () {
-
+    @When("启用Syslog但IP为无效参数")
+    public void enableSyslogWithInvalidIp() {
+        enableCheckbox = driver.findElement(Locator.enableCheckbox);
+        ip = driver.findElement(Locator.ip);
+        port = driver.findElement(Locator.port);
+        saveBtn = driver.findElement(Locator.save);
+        if (!enableCheckbox.isSelected()) {
+            enableCheckbox.click();
+        }
+        ip.clear();
+        ip.sendKeys("1.1.1.1111");
+        port.clear();
+        port.sendKeys("514");
+        saveBtn.click();
     }
 
-    @Test
-    void testPortInvalid() {
-
+    @Then("Syslog的IP输入框出现错误提示")
+    public void saveFailedIpInvalid() {
+        WebElement tip = waitFor(Locator.ipErrorTip);
+        assertEquals("请输入合法的IP地址", tip.getText());
     }
 }
